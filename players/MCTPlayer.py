@@ -102,7 +102,7 @@ class myPlayer(AdvancePlayer):
         self.opponent_id = next(filter(lambda ps: ps.id != self.id, game_state.players)).id
         self.board = new_azul_board(game_state, self.id, self.opponent_id)
 
-        for _ in range(1000):
+        for _ in range(30):
            self.tree.do_rollout(self.board)
         best_board = self.tree.choose(self.board)
 
