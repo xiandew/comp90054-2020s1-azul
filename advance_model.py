@@ -133,7 +133,7 @@ class AdvanceGameRunner:
                 moves_copy = copy.deepcopy(moves)
                 
                 try:
-                    selected = func_timeout(self.time_limit,self.players[i].SelectMove,args=(moves_copy, gs_copy))
+                    selected = self.players[i].SelectMove(moves_copy, gs_copy)
                     
                 except FunctionTimedOut:
                     self.warnings[i] += 1
