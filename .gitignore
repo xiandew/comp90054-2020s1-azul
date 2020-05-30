@@ -1,3 +1,12 @@
-.vs/
+*.pyc
 __pycache__/
-.idea/
+.ipynb_checkpoints
+replays/
+output/
+morePlayers/
+test.ipynb
+teams/
+results/
+competitions/
+spreadsheet/
+result.*
