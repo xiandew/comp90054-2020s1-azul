@@ -106,16 +106,11 @@ class AdvanceGameRunner:
             try:
                 func_timeout(self.startRound_time_limit,self.players[i].StartRound,args=(gs_copy,))
             except AttributeError:
-<<<<<<< HEAD
-                pass
-            # except FunctionTimedOut:
-            except:
-=======
                 print("[WARNING] StartRound() function is not defined.")
                 pass
             except FunctionTimedOut:
                 print("[TimeourError] timeout when calling StartRound()!")
->>>>>>> upstream/master
+
                 self.warnings[i] += 1
                 if self.displayer is not None:
                     self.displayer.TimeOutWarning(self,i)
@@ -151,14 +146,8 @@ class AdvanceGameRunner:
                 moves_copy = copy.deepcopy(moves)
                 
                 try:
-                    selected = func_timeout(self.time_limit,self.players[i].SelectMove,args=(moves_copy, gs_copy))
-<<<<<<< HEAD
-                except AttributeError:
-                    pass    
-                # except FunctionTimedOut:
-                except:
-=======
 
+                    selected = func_timeout(self.time_limit,self.players[i].SelectMove,args=(moves_copy, gs_copy))
                 except AttributeError:
                     print("[AttributeError]: SelectMove() is not defined!")
                     print("Selecting random move instead!")
@@ -172,10 +161,10 @@ class AdvanceGameRunner:
                         return player_traces
                     selected = random.choice(moves)
 
+
                 except FunctionTimedOut:
                     print("[TimeoutError] timeout when calling SelectMove()!")
                     print("Selecting random move instead!")
->>>>>>> upstream/master
                     self.warnings[i] += 1
                     if self.displayer is not None:
                         self.displayer.TimeOutWarning(self,i)
@@ -260,16 +249,11 @@ class AdvanceGameRunner:
                     try:
                         func_timeout(self.startRound_time_limit,self.players[i].StartRound,args=(gs_copy,))
                     except AttributeError:
-<<<<<<< HEAD
-                        pass
-                    # except FunctionTimedOut:
-                    except:
-=======
                         print("[WARNING] StartRound() function is not defined.")
                         pass
                     except FunctionTimedOut:
                         print("[TimeourError] timeout when calling StartRound()!")
->>>>>>> upstream/master
+
                         self.warnings[i] += 1
                         if self.displayer is not None:
                             self.displayer.TimeOutWarning(self,i)
@@ -278,8 +262,6 @@ class AdvanceGameRunner:
                         if self.warnings[i] == self.warning_limit:
                             player_traces = self._EndGame(player_order,isTimeOut=True,id=i)
                             return player_traces
-<<<<<<< HEAD
-=======
                     except:
                         print("[OtherError] Error occured when calling StartRound()!")
                         self.warnings[i] += 1
@@ -290,10 +272,7 @@ class AdvanceGameRunner:
                         if self.warnings[i] == self.warning_limit:
                             player_traces = self._EndGame(player_order,isTimeOut=True,id=i)
                             return player_traces                        
-                        
-
->>>>>>> upstream/master
-                                    
+                             
                 random.seed(self.seed_list[self.seed_idx])
                 self.seed_idx += 1
 
