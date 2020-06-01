@@ -1,3 +1,10 @@
+# Code with reference to online tutorial at python programming dot net
+# https://pythonprogramming.net/training-deep-q-learning-dqn-reinforcement-learning-python-tutorial/?completed=/deep-q-learning-dqn-reinforcement-learning-python-tutorial/
+# part of the code was adapted to accommodate to our problem.
+
+# Our approach: In this implementation, we create a deep Q neural network with experience replay to enhance performance,
+# We store past 'experience' in a deque and only for a certain amount of latest
+# experience.
 from collections import deque
 from copy import deepcopy
 import os
@@ -14,6 +21,9 @@ from utils import *
 REPLAY_MEMORY_SIZE = 50000
 MIN_REPLAY_MEMORY_SIZE = 1000
 MINIBATCH_SIZE = 64
+UPDATE_TARGET_EVERY = 5
+
+LOAD_MODEL = None
 
 class DQNAgent:
     def __init__(self):
@@ -39,7 +49,6 @@ class DQNAgent:
     def create_model(self):
         if LOAD_MODEL is not None:
             model = load_model(LOAD_MODEL)
-            self.EPSILON = self.EPSILON_MIN
 
             return model
 
@@ -61,18 +70,34 @@ class DQNAgent:
         #     self.EPSILON = self.EPSILON_MIN
         return model
     
+    # transition containing:
+    # - current_state
+    # - action
+    # - reward
+    # - new_state
+    # - done
+    # this is to add into the memory deque, and keep replaying the most recent
+    # ones to update 
     def update_replay_memory(self, transition):
         self.replay_memory.append(transition)
 
     def get_qs(self, state):
         return self.model.predict(np.array(state))[0]
     
-    def train(self, terminal_state, step):
+    def train(self, terminal_state):
+        if len(self.replay_memory) < MINIBATCH_SIZE:
+            return
+        
+        # get some sample of (current_state, action, reward, new_state, done) to update later 
         minibatch = random.sample(self.replay_memory, MINIBATCH_SIZE)
 
+        # Retrieve the states before action from the batch
         current_states = np.array([transition[0] for transition in minibatch])
+        
+        # Retrive the Q values before action from the batch
         current_qs_list = self.model.predict(current_states)
     
+        # Retrieve the new states after peforming the actions from the batch
         new_current_states = np.array([transition[3] for transition in minibatch])
         future_qs_list = self.target_model.predict(new_current_states)
 
