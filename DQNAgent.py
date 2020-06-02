@@ -11,7 +11,8 @@ import os
 
 import numpy as np
 
-from tensorflow.keras import Sequential, load_model
+from tensorflow.keras import Sequential
+from tensorflow.keras.models import load_model
 from tensorflow.keras.layers import Dense
 from tensorflow.keras.optimizers import Adam
 
@@ -28,9 +29,10 @@ LOAD_MODEL = None
 class DQNAgent:
     def __init__(self):
 
+        print('dqn agent')
         # Main model
         self.model = self.create_model()
-
+        print('model created: ', self.model)
         # Target model
         self.target_model = self.create_model()
         self.target_model.set_weights(self.model.get_weights())
