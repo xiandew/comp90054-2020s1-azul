@@ -2,6 +2,8 @@
 # https://pythonprogramming.net/training-deep-q-learning-dqn-reinforcement-learning-python-tutorial/?completed=/deep-q-learning-dqn-reinforcement-learning-python-tutorial/
 # part of the code was adapted to accommodate to our problem.
 
+# Most of the comments are added by us.
+
 # Our approach: In this implementation, we create a deep Q neural network with experience replay to enhance performance,
 # We store past 'experience' in a deque and only for a certain amount of latest
 # experience.
@@ -19,9 +21,9 @@ from tensorflow.keras.optimizers import Adam
 from advance_model import *
 from utils import *
 
-REPLAY_MEMORY_SIZE = 50000
-MIN_REPLAY_MEMORY_SIZE = 1000
-MINIBATCH_SIZE = 64
+REPLAY_MEMORY_SIZE = 50000 # the maximum number of experience the memory deque can hold
+MIN_REPLAY_MEMORY_SIZE = 1000 # the minimum number of experience when we carry out the training phase.
+MINIBATCH_SIZE = 64 # train 64 replays everytime.
 UPDATE_TARGET_EVERY = 5
 
 LOAD_MODEL = None
