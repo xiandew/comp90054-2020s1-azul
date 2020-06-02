@@ -1,12 +1,16 @@
 """
 
 """
+import sys
+sys.path.append('players/SaltedEgg/')
 from copy import deepcopy
 from advance_model import *
 from utils import *
 from collections import namedtuple
 from random import choice
 from monte_carlo_tree_search import MCTS, Node
+import json
+
 
 _AZULB = namedtuple("AzulBoard", "game_state player_id opponent_id winner terminal")
 
@@ -101,7 +105,6 @@ class myPlayer(AdvancePlayer):
 
         self.opponent_id = next(filter(lambda ps: ps.id != self.id, game_state.players)).id
         self.board = new_azul_board(game_state, self.id, self.opponent_id)
-
         for _ in range(30):
            self.tree.do_rollout(self.board)
         best_board = self.tree.choose(self.board)
